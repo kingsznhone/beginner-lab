@@ -1,0 +1,65 @@
+#!/usr/bin/python
+from random import choice
+#Draw a door
+def Door():
+    lll=[1,2,3,4,5,6]
+    print
+    print("==============================================")
+    print
+    print("Choose a area to shoot.")
+    print("   -------------   ")
+    print("   | %s   %s   %s |   "%(lll[0],lll[1],lll[2]))
+    print("   |           |   ")
+    print("   | %s   %s   %s |   "%(lll[3],lll[4],lll[5]))
+    print("-------------------")
+#Choose a number. Input is limited in 1-6
+def shoot(sh):
+    while 1==1:
+        sh=input("Your Choice:")
+        n=sh.isdigit()
+        if n==False:
+            print("Input Number！")
+            continue
+        else:
+            sh=int(sh)
+        if sh<0 or sh>6:
+            print("Input 1-6")
+            continue
+        else:
+            break
+    return sh
+#Win or Lose
+def result(sh,comm):
+    lll=[" "," "," "," "," "," "]
+    print("This is your ball→o")
+    print("This is computer→x")
+    print()
+    sh=sh-1
+    comm=comm-1
+    lll[sh]="o"
+    lll[comm]="x"
+    print("   -------------   ")
+    print("   | %s   %s   %s |   "%(lll[0],lll[1],lll[2]))
+    print("   |           |   ")
+    print("   | %s   %s   %s |   "%(lll[3],lll[4],lll[5]))
+    print("-------------------")
+    if sh==comm:
+        print("You Lost!")
+        return 0
+    else:
+        print("You Win!")
+        return 1
+
+cot="y"
+Goal=int(0)
+while cot=="y":
+    sh=int(0)
+    lll=[1,2,3,4,5,6]
+    Door()                                      
+    sh=int(shoot(sh))                           
+    print("==============================")
+    comm=choice(lll)                            #computer choose a random area
+    Goal=Goal+result(sh,comm)                   #Sum of Goal.
+    print("==============================")
+    cot=input("Continue?(y/n)")
+print("Your Goal is %d"%(Goal))
