@@ -1,0 +1,115 @@
+#!/usr/bin/python3
+#和弱智电脑XXOO
+#
+#
+
+from random import choice 
+def board(axis):
+    print ("-"*13)
+    print ("""| %s | %s | %s |"""%(axis[0][0],axis[0][1],axis[0][2]))
+    print ("-"*13)
+    print ("""| %s | %s | %s |"""%(axis[1][0],axis[1][1],axis[1][2]))
+    print ("-"*13)
+    print ("""| %s | %s | %s |"""%(axis[2][0],axis[2][1],axis[2][2]))
+    print ("-"*13)
+    
+def choose(axis):
+    plrc=[]
+    cpl=1
+    for j in axis:
+                for i in j:
+                    i=str(i)
+                    if i>"0" and i<="9":
+                        plrc.append(i)
+    while cpl:
+        ch=input("Your Choice:")
+        
+        if not ch.isdigit():
+            print("Input Number！")
+            continue
+        
+        ch=int(ch)
+        if not ch in range(1,10):
+            print("Input 1-9")
+            continue
+        
+        for i in plrc:
+            i=int(i)
+            if ch==i:
+                cpl=0
+                break
+        if not cpl:
+            break
+        print ("Piece Exsist")
+    ch2=int(ch-1)
+    i=int((ch2-(ch2%3))/3)
+    j=int(ch2%3)
+    axis[i][j]="O"
+    return axis
+
+def cpt(axis):
+    comc=[]
+    for j in axis:
+        for i in j:
+            i=str(i)
+            if i>"0" and i<="9":
+                comc.append(i)
+    ch=choice(comc)
+    ch2=int(ch)-1
+    i=int((ch2-(ch2%3))/3)
+    j=int(ch2%3)
+    axis[i][j]="X"
+    print("Computer Chooce:",ch)
+    return axis
+    
+
+def referee(axis):
+    for j in range(3):
+        if axis[j][0]==axis[j][1]==axis[j][2]:
+                return axis[j][1]
+    for i in range(3):
+        if axis[0][i]==axis[1][i]==axis[2][i]:
+                return axis[1][i]
+    if axis[0][0]==axis[1][1]==axis[2][2]:
+                return axis[1][1]
+    if axis[2][0]==axis[1][1]==axis[0][2]:
+                return axis[1][1]
+    for j in axis:
+        for i in j:
+            i=str(i)
+            if i>"0" and i<="9":
+                return "C"
+    return "D"
+
+axis=[[1,2,3],[4,5,6],[7,8,9]]
+finish="C"
+who=1
+board(axis)
+while 1:
+    
+    axis=choose(axis)
+
+    board(axis)
+
+    finish=(referee(axis))
+
+    if finish != "C":
+        break
+
+    axis=cpt(axis)
+
+    board(axis)
+
+    finish=(referee(axis))
+    if finish != "C":
+        break
+
+if finish == "X":
+    who = "Computer"
+    print (who,"Win")
+elif finish == "O":
+    who = "You"
+    print (who,"Win")
+else:
+    print ("Draw")
+
